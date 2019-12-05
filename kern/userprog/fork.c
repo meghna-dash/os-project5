@@ -64,19 +64,19 @@ fork(void);
     // Create a new process id for the child processs.
     pid = p_new -> p_pid;
     // The process id must be greater than 0.
-    if (pid < 1 || pid == NULL) {
+    if (getpid(child) < 1 || getpid(child) == NULL) {
       return -1;
     }
 
     // On error, no new process is created, fork only returns once, returning -1,
     // and errno is set according to the error encountered.
     if (err) {
-      return err;
+      return errno(err);
     }
 
     // In the parent process, the process id of the new child process is returned.
-    if (pid > 0) {
-      return p_new;
+    if (getpid(child) != NULL) {
+      return getpid(child);
     }
 
     // In the child process, 0 is returned.
