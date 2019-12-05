@@ -33,29 +33,52 @@ fork(void);
  * except that one (the "new" one, or "child"), has a new, unique process id,
  * and in the other (the "parent") the process id is unchanged.
  */
+ int fork(struct trapframe *tf, int *ret){
+   // create child process
+  	child = thread_create(curthread -> t_name);
 
-/*
- * The process id must be greater than 0.
- */
+    KASSERT(curthread != NULL);
+    KASSERT(tf != NULL);
 
-/* The two processes do not share memory or open file tables; this state is
- * copied into the new process, and subsequent modification in one process does
- * not affect the other.
- */
+    // Check if user has allowance for a new process.
+    // If not, return error code EAGAIN	Too many processes already exist.
+    if (num_total_processes >= allowed_processes) {
+      return EAGAIN;
+    }
 
-/* However, the file handle objects the file tables point to are shared, so,
- * for instance, calls to lseek in one process can affect the other.
- */
+    // Allocate memory to child process using kmalloc.
+    child -> t_stack = kmalloc(STACK_SIZE);
+    // Return error code ENOMEM	if sufficient virtual memory for the new process
+    // was not available.
+  	if (child -> t_stack == NULL) {
+  		kfree(child -> t_name);
+  		kfree(child);
+  		return ENOMEM;
+  	}
 
-/* On success, fork returns twice, once in the parent process and once in the
- * child process. In the child process, 0 is returned. In the parent process,
- * the process id of the new child process is returned.
- */
+    child -> t_pcb = curthread -> t_pcb;
 
-/* On error, no new process is created, fork only returns once, returning -1,
- * and errno is set according to the error encountered.
- *
- * Error Codes:
- * EAGAIN	Too many processes already exist.
- * ENOMEM	Sufficient virtual memory for the new process was not available.
- */
+    // copy trapframe onto new thread and make the new thread runnable
+    md_initpcb(&child -> t_pcb, child -> t_stack, tf, 0, md_forkentry);
+
+    // Create a new process id for the child processs.
+    pid = p_new -> p_pid;
+    // The process id must be greater than 0.
+    if (pid < 1 || pid == NULL) {
+      return -1;
+    }
+
+    // On error, no new process is created, fork only returns once, returning -1,
+    // and errno is set according to the error encountered.
+    if (err) {
+      return err;
+    }
+
+    // In the parent process, the process id of the new child process is returned.
+    if (pid > 0) {
+      return p_new;
+    }
+
+    // In the child process, 0 is returned.
+    return 0;
+ }
