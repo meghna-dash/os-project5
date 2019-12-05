@@ -1,0 +1,38 @@
+Script started on Mon Nov 18 21:48:07 2019
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+[?1034hbash-3.2$ cd ..
+bash-3.2$ ls
+bin			cs161-gdb-1.5		os161-1.10.tar.gz	sys161-1.14
+cs161-binutils-1.5	cs161-gdb-1.5.tgz	os161-gcc.tar.gz	sys161-1.14.tar.gz
+cs161-binutils-1.5.tgz	ncurses-5.9		project4		sys161.conf
+cs161-gcc-1.5		ncurses-5.9.tar.gz	root			tools
+cs161-gcc-1.5.tgz	os161			src
+bash-3.2$ cd os161
+bash-3.2$ ls
+ABOUT-NLS		Makefile.tpl		contrib			ltcf-c.sh
+BUGS			NEWS			depcomp			ltcf-cxx.sh
+COPYING			README			faq.html		ltcf-gcj.sh
+COPYING.LIB		README.SCO		fixincludes		ltconfig
+ChangeLog		bugs.html		gcc			ltmain.sh
+ChangeLog.tree-ssa	compile			include			maintainer-scripts
+FAQ			config			install-sh		missing
+INSTALL			config-ml.in		intl			mkdep
+LAST_UPDATED		config.guess		libcpp			mkinstalldirs
+MAINTAINERS		config.rpath		libiberty		move-if-change
+MD5SUMS			config.sub		libmudflap		symlink-tree
+Makefile.def		configure		libssp			ylwrap
+Makefile.in		configure.in		libtool.m4
+bash-3.2$ cd compile
+bash: cd: compile: Not a directory
+bash-3.2$ cd compile
+bash: cd: compile: Not a directory
+bash-3.2$ test
+bash-3.2$ 1a
+bash: 1a: command not found
+bash-3.2$ exit
+exit
+
+Script done on Mon Nov 18 21:51:11 2019
